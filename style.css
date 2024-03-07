@@ -708,7 +708,7 @@ main .container .right{
 /* -------------------------------------------------------- 
     MEDIA QUERIES FOR SMALL LAPTOPS AND BIG TABLETS
 ----------------------------------------------------------*/
-@media screen and (max-width:992px){
+@media screen and (max-width:10.7in){
     .container{
         width: 96%;
     }
@@ -741,7 +741,7 @@ main .container .right{
 /* -------------------------------------------------------- 
     MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONE
 ----------------------------------------------------------*/
-@media screen and (max-width:600px){
+@media screen and (max-width:7in){
     nav .search-bar{
         display: none;
     }
