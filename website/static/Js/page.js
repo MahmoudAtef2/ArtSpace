@@ -208,4 +208,33 @@ Bg3.addEventListener('click',() => {
     Bg2.classList.remove('active');
     changeBG();
 })
+
 //END
+// redirect to uploads
+const uploadForm = document.querySelector(".customize-post")
+const uploadButton = document.getElementById("uploadButton")
+const home_url = window.location.href
+//theme.addEventListener('click', openThemeModel);
+const openUploadForm = () => {
+    uploadForm.style.display = 'grid';
+}
+
+// close model
+const closeUploadForm = (e) => {
+    if(e.target.classList.contains('customize-post')){
+        uploadForm.style.display = 'none';
+    }
+}
+
+uploadButton.addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    // Append '/uploads' to the current URL without reloading the page
+    openUploadForm();
+    window.history.pushState({}, '', home_url + 'creat-post');
+    
+})
+uploadForm.addEventListener("click", function(event) {
+    //event.preventDefault(); // Prevent the default form submission behavior
+    closeUploadForm(event);
+    window.history.pushState({}, '', home_url);
+})

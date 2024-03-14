@@ -9,9 +9,30 @@
     <!-- Icon CDN -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <!-- STYLESHEET -->
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="static\home.css">
 </head>
 <body>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    {% if category == "error" %}
+                        <div class="alert alert-danger" role="alert">
+                            <div class="alert-content">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success" role="alert">
+                            <div class="alert-content">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
     <nav>
         <div class="container">
             <h2 class="log">
@@ -24,9 +45,21 @@
                  placeholder="Search for creators, categories and projects">
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="create-post">Create</label>
-                <div class="profile-photo">
-                    <img src="./images/profile-1.jpg">
+                <!-- <label class="btn btn-primary" for="create-post">Create</label> -->
+                <input type="submit" value="Creat Post" class="btn btn-primary" id="uploadButton">
+                <div class="customize-post">
+                    <title>Create Post</title>
+                    <form action="/creat-post"  method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                        <h2>Create a Post</h2>
+                
+                        <label for="caption">Caption:</label>
+                        <textarea id="caption" name="caption" rows="4" required></textarea>
+                
+                        <label for="photo">Upload Photo:</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" required>
+                
+                        <button type="submit">Create Post</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -41,7 +74,7 @@
             <div class="left">
                 <a class="profile">
                     <div class="profile-photo">
-                        <img src="./images/profile-1.jpg">
+                        <img src="/static/images/profile-1.jpg">
                     </div>
                     <div class="handle">
                         <h4>Souhail Segh</h4>
@@ -64,7 +97,7 @@
                         <div class="notifications-popup">
                             <div>
                                 <div class="profile-photo">
-                                    <img src="./images/profile-1A.jpg">
+                                    <img src="/static/images/profile-1A.jpg">
                                 </div>
                                 <div class="Notification-body">
                                     <b>Maryam Bennani</b> accepted your friend request
@@ -74,7 +107,7 @@
 
                             <div>
                                 <div class="profile-photo">
-                                    <img src="./images/profile-15.jpg">
+                                    <img src="static/images/profile-15.jpg">
                                 </div>
                                 <div class="Notification-body">
                                     <b>Amine Saleh</b> commented on your post
@@ -84,7 +117,7 @@
 
                             <div>
                                 <div class="profile-photo">
-                                    <img src="./images/profile-2.jpg">
+                                    <img src="static/images/profile-2.jpg">
                                 </div>
                                 <div class="Notification-body">
                                     <b>Imane Fellah</b> commented on your post
@@ -111,8 +144,8 @@
                 </div>
 
                 <!-- End Sidebar -->
-                <label for="create-post" class="btn btn-primary">Create Post</label>
-
+                <!-- <label for="create-post" class="btn btn-primary">Create Post</label> -->
+                <a href="/logout" class="btn btn-primary">Logout</a>
             </div>
 
 
@@ -122,25 +155,25 @@
                 <div class="stories">
                     <div class="story">
                         <div class="profile-photo">
-                            <img src="./images/profile-1.jpg">
+                            <img src="static/images/profile-1.jpg">
                         </div>
                         <p class="name">Your Story</p>
                     </div>
                     <div class="story">
                         <div class="profile-photo">
-                            <img src="./images/profile-8.jpg">
+                            <img src="static/images/profile-8.jpg">
                         </div>
                         <p class="name">Aymane Samad</p>
                     </div>
                     <div class="story">
                         <div class="profile-photo">
-                            <img src="./images/profile-14.jpg">
+                            <img src="static/images/profile-14.jpg">
                         </div>
                         <p class="name">Hajar Najjar</p>
                     </div>
                     <div class="story">
                         <div class="profile-photo">
-                            <img src="./images/profile-12.jpg">
+                            <img src="static/images/profile-12.jpg">
                         </div>
                         <p class="name">Chaimae Najjar</p>
                     </div>
@@ -148,33 +181,39 @@
                 <!------------- END OF STORIES ----------->
                 <form class="create-post">
                     <div class="profile-photo">
-                        <img src="./images/profile-1.jpg">
+                        <img src="static/images/profile-1.jpg">
                     </div>
                     <input type="text" placeholder="What's on your mind Souhail?" id="create-post">
                     <input type="submit" value="Post" class="btn btn-primary">
                 </form>
-                <!-------------- FEEDS/POSTS ------------->
                 <div class="feeds">
-                    <!---------- FEED/POST 1 ------------->
+                    {% for post in posts %}
                     <div class="feed">
                         <div class="head">
                             <div class="user">
                                 <div class="profile">
                                 <div class="profile-photo">
-                                    <img src="./images/profile-12.jpg">
+                                    <img src="/static/images/profile-12.jpg">
                                 </div>
                                 </div>
                                 <div class="info">
-                                    <h3>Chaimae Najjar</h3>
-                                    <small>Dubai, 30 MINUTES AGO</small>
+                                    <h3>{{ post.user.username }}</h3>
+                                    <small>{{ post.date_created }}</small>
                                 </div>
                             </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
+                            {% if user.id == post.author %}
+                            <div class="dropdown">
+                                <button id="ellipsisButton" class="ellipsis-button" tabindex="0">&#8942;</button>
+                                <ul id="dropdownMenu" class="dropdown-menu">
+                                  <li>
+                                    <a href="/delete-post/{{post.id}}" class="dropdown-item delete-button">Delete</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            {% endif %}
                         </div>
                         <div class="photo">
-                            <img src="./images/feed-8.png">
+                            <img src="/static/uploads/{{ post.post_image }}">
                         </div>
                         <div class="action-button">
                             <div class="interaction-buttons">
@@ -187,65 +226,20 @@
                             </div>
                         </div>
                         <div class="liked-by">
-                            <span><img src="./images/profile-15.jpg"></span>
-                            <span><img src="./images/profile-17.jpg"></span>
-                            <span><img src="./images/profile-10.jpg"></span>
+                            <span><img src="/static/images/profile-15.jpg"></span>
+                            <span><img src="/static/images/profile-17.jpg"></span>
+                            <span><img src="/static/images/profile-10.jpg"></span>
                             <p>Liked by <b>Hind El</b> and <b>2,357 others</b></p>
                         </div>
                         <div class="caption">
-                            <p><b>Chaimae Najjar</b> What a sunny day! 
+                            <p><b>{{ post.user.username }}</b> {{ post.caption }} 
                                 <span class="harsh-tag">#lifestyle</span>
                             </p>
                         </div>
                         <div class="comments text-muted">View all 356 comments</div>
                     </div>
-
-                    <!---------- FEED/POST 2 ------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-14.jpg">
-                                </div>
-                                </div>
-                                <div class="info">
-                                    <h3>Hajar Najjar</h3>
-                                    <small>Dubai, 45 MINUTES AGO</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="./images/feed-1.jpg">
-                        </div>
-                        <div class="action-button">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="./images/profile-17.jpg"></span>
-                            <span><img src="./images/profile-13.jpg"></span>
-                            <span><img src="./images/profile-11.jpg"></span>
-                            <p>Liked by <b>Asmaa Chadli</b> and <b>1,489 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Hajar Najjar</b> Happy birthday to me! 
-                                <span class="harsh-tag">#Gifts#Party</span>
-                            </p>
-                        </div>
-                        <div class="comments text-muted">View all 125 comments</div>
-                    </div>
+                    {% endfor %}
                 </div>
-                <!----------------------------- END OF FEEDS  ------------------------------->
             </div>
             <!--------------------------------- END OF MIDDLE ---------------------------------->            
             
@@ -271,7 +265,7 @@
                         <!-- profile photo of the sender -->
                         <div class="profile">
                             <div class="profile-photo">
-                                <img src="./images/profile-18.jpg">
+                                <img src="static/images/profile-18.jpg">
                                 <div class="active"></div>
                             </div>
                         </div>
@@ -285,7 +279,7 @@
                         <!-- profile photo of the sender -->
                         <div class="profile">
                             <div class="profile-photo">
-                                <img src="./images/profile-16.jpg">
+                                <img src="static/images/profile-16.jpg">
                                 <div class="active"></div>
                             </div>
                         </div>
@@ -299,7 +293,7 @@
                         <!-- profile photo of the sender -->
                         <div class="profile">
                             <div class="profile-photo">
-                                <img src="./images/profile-20.jpg">
+                                <img src="static/images/profile-20.jpg">
                             </div>
                         </div>
                         <div class="message-body">
@@ -312,7 +306,7 @@
                         <!-- profile photo of the sender -->
                         <div class="profile">
                             <div class="profile-photo">
-                                <img src="./images/profile-15.jpg">
+                                <img src="static/images/profile-15.jpg">
                                 <div class="active"></div>
                             </div>
                         </div>
@@ -326,7 +320,7 @@
                         <!-- profile photo of the sender -->
                         <div class="profile">
                             <div class="profile-photo">
-                                <img src="./images/profile-11.jpg">
+                                <img src="static/images/profile-11.jpg">
                             </div>
                         </div>
                         <div class="message-body">
@@ -343,7 +337,7 @@
                         <div class="request">
                             <div class="info">
                                 <div class="profile-photo">
-                                    <img src="./images/profile-5.jpg">
+                                    <img src="static/images/profile-5.jpg">
                                 </div>
                                 <div>
                                     <h5>Noor Salamat</h5>
@@ -360,7 +354,7 @@
                         <div class="request">
                             <div class="info">
                                 <div class="profile-photo">
-                                    <img src="./images/profile-3.jpg">
+                                    <img src="static/images/profile-3.jpg">
                                 </div>
                                 <div>
                                     <h5>Amal MJ</h5>
@@ -430,7 +424,10 @@
         </div>
     </div>
 </div>
-<script src="page.js" type="text/JavaScript" defer></script>
-<!-- <script src="./page.js"></script> -->
+<script src="static/Js/page.js" type="text/JavaScript" defer></script>
+<!-- <script src="static/page.js"></script> -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelectorAll('.alert').forEach(alert => setTimeout(() => alert.remove(), 500)), 1000));
+</script>
 </body>
 </html>

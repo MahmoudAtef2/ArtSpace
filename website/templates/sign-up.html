@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" type="text/css" href="static\sign-up.css">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    {% if category == "error" %}
+                        <div class="alert alert-danger" role="alert">
+                            <div class="alert-content">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success" role="alert">
+                            <div class="alert-content">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="register">
+        <div class="card">
+            <div class="left">
+                <h1>Art Space.</h1>
+                <span>Do you have an account?</span>
+                <a href="/login">
+                    <button>Login</button>
+                </a>
+            </div>
+            <div class="right">
+                <h1>Register</h1>
+                <form method="POST" action="">
+                    <input type="text" id="username" name="username" placeholder="Username">
+                    <input type="email" id="email" name="email" placeholder="Email">
+                    <input type="password" id="password1" name="password1" placeholder="Password">
+                    <input type="password" id="password2" name="password2" placeholder="Confirm Password">
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelectorAll('.alert').forEach(alert => setTimeout(() => alert.remove(), 500)), 1000));
+    </script>
+</body>
+
+</html>
