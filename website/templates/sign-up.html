@@ -9,28 +9,30 @@
 </head>
 
 <body>
+    <!------------------------------------ Flash message code --------------------------------------->
     {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    {% if category == "error" %}
-                        <div class="alert alert-danger" role="alert">
-                            <div class="alert-content">
-                                {{ message }}
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="alert alert-success" role="alert">
-                            <div class="alert-content">
-                                {{ message }}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        {% if category == "error" %}
+        <div class="alert alert-danger" role="alert">
+            <div class="alert-content">
+                {{ message }}
             </div>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+            <div class="alert-content">
+                {{ message }}
+            </div>
+        </div>
         {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
 
+    <!------------------------------------ Register Page --------------------------------------->
     <div class="register">
         <div class="card">
             <div class="left">
@@ -52,6 +54,8 @@
             </div>
         </div>
     </div>
+
+    <!------------- script for flash message time show ----------->
     <script>
         document.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelectorAll('.alert').forEach(alert => setTimeout(() => alert.remove(), 500)), 1000));
     </script>

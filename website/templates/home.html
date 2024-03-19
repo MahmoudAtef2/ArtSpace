@@ -1,75 +1,75 @@
 <!DOCTYPE html>
-<html   lang="en">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width",
-    initial-scale="1.0">
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
     <title>Art Space, using HTML, CSS, JS and Python</title>
     <!-- Icon CDN -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="static\home.css">
 </head>
+
 <body>
+    <!------------------------------------ Flash message code --------------------------------------->
     {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    {% if category == "error" %}
-                        <div class="alert alert-danger" role="alert">
-                            <div class="alert-content">
-                                {{ message }}
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="alert alert-success" role="alert">
-                            <div class="alert-content">
-                                {{ message }}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        {% if category == "error" %}
+        <div class="alert alert-danger" role="alert">
+            <div class="alert-content">
+                {{ message }}
             </div>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+            <div class="alert-content">
+                {{ message }}
+            </div>
+        </div>
         {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
+    <!------------------------------------ Navigition Bar --------------------------------------->
     <nav>
         <div class="container">
             <h2 class="log">
                 ArtSpace
             </h2>
             <div class="search-bar">
-                <!--https://iconscout.com/free-icon/search-1436-->
                 <i class="uil uil-search"></i>
-                <input type="search",
-                 placeholder="Search for creators, categories and projects">
+                <input type="search" , placeholder="Search for creators, categories and projects">
             </div>
             <div class="create">
-                <!-- <label class="btn btn-primary" for="create-post">Create</label> -->
                 <input type="submit" value="Creat Post" class="btn btn-primary" id="uploadButton">
                 <div class="customize-post">
                     <title>Create Post</title>
-                    <form action="/creat-post"  method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    <form action="/creat-post" method="post" enctype="multipart/form-data"
+                        onsubmit="return validateForm()">
                         <h2>Create a Post</h2>
-                
+
                         <label for="caption">Caption:</label>
                         <textarea id="caption" name="caption" rows="4" required></textarea>
-                
+
                         <label for="photo">Upload Photo:</label>
                         <input type="file" id="photo" name="photo" accept="image/*" required>
-                
+
                         <button type="submit">Create Post</button>
                     </form>
                 </div>
             </div>
         </div>
     </nav>
-
     <!------------------------------------ MAIN SECTION --------------------------------------->
     <main>
         <div class="container">
             <!-- divide the page on three parts/columns -->
-            
+
             <!----------------------------------- LEFT ---------------------------------------->
             <div class="left">
                 <a class="profile">
@@ -86,13 +86,16 @@
                 <!-- Sidebar -->
                 <div class="sidebar">
                     <a class="menu-item active">
-                        <span><i class="uil uil-home"></i></span><h3>Home</h3>
+                        <span><i class="uil uil-home"></i></span>
+                        <h3>Home</h3>
                     </a>
                     <a class="menu-item">
-                        <span><i class="uil uil-compass"></i></span><h3>Explore</h3>
+                        <span><i class="uil uil-compass"></i></span>
+                        <h3>Explore</h3>
                     </a>
                     <a class="menu-item" id="notifications">
-                        <span><i class="uil uil-bell"><small class="notification-count">3+</small></i></span><h3>Notifications</h3>
+                        <span><i class="uil uil-bell"><small class="notification-count">3+</small></i></span>
+                        <h3>Notifications</h3>
                         <!-- Notification popup -->
                         <div class="notifications-popup">
                             <div>
@@ -127,24 +130,28 @@
                         </div>
                     </a>
                     <a class="menu-item" id="messages-notifications">
-                        <span><i class="uil uil-envelope"><small class="notification-count">9</small></i></span><h3>Messages</h3>
+                        <span><i class="uil uil-envelope"><small class="notification-count">9</small></i></span>
+                        <h3>Messages</h3>
                     </a>
                     <a class="menu-item">
-                        <span><i class="uil uil-bookmark"></i></span><h3>Bookmarks</h3>
+                        <span><i class="uil uil-bookmark"></i></span>
+                        <h3>Bookmarks</h3>
                     </a>
                     <a class="menu-item">
-                        <span><i class="uil uil-chart-line"></i></span><h3>Analytics</h3>
+                        <span><i class="uil uil-chart-line"></i></span>
+                        <h3>Analytics</h3>
                     </a>
                     <a class="menu-item" id="theme">
-                        <span><i class="uil uil-palette"></i></span><h3>Theme</h3>
+                        <span><i class="uil uil-palette"></i></span>
+                        <h3>Theme</h3>
                     </a>
                     <a class="menu-item">
-                        <span><i class="uil uil-setting"></i></span><h3>Settings</h3>
+                        <span><i class="uil uil-setting"></i></span>
+                        <h3>Settings</h3>
                     </a>
                 </div>
 
                 <!-- End Sidebar -->
-                <!-- <label for="create-post" class="btn btn-primary">Create Post</label> -->
                 <a href="/logout" class="btn btn-primary">Logout</a>
             </div>
 
@@ -187,14 +194,15 @@
                     <input type="submit" value="Post" class="btn btn-primary">
                 </form>
                 <div class="feeds">
+                    <!------------- Posts ----------->
                     {% for post in posts %}
                     <div class="feed">
                         <div class="head">
                             <div class="user">
                                 <div class="profile">
-                                <div class="profile-photo">
-                                    <img src="/static/images/profile-12.jpg">
-                                </div>
+                                    <div class="profile-photo">
+                                        <img src="/static/images/profile-12.jpg">
+                                    </div>
                                 </div>
                                 <div class="info">
                                     <h3>{{ post.user.username }}</h3>
@@ -205,11 +213,12 @@
                             <div class="dropdown">
                                 <button id="ellipsisButton" class="ellipsis-button" tabindex="0">&#8942;</button>
                                 <ul id="dropdownMenu" class="dropdown-menu">
-                                  <li>
-                                    <a href="/delete-post/{{post.id}}" class="dropdown-item delete-button">Delete</a>
-                                  </li>
+                                    <li>
+                                        <a href="/delete-post/{{post.id}}"
+                                            class="dropdown-item delete-button">Delete</a>
+                                    </li>
                                 </ul>
-                              </div>
+                            </div>
                             {% endif %}
                         </div>
                         <div class="photo">
@@ -232,7 +241,7 @@
                             <p>Liked by <b>Hind El</b> and <b>2,357 others</b></p>
                         </div>
                         <div class="caption">
-                            <p><b>{{ post.user.username }}</b> {{ post.caption }} 
+                            <p><b>{{ post.user.username }}</b> {{ post.caption }}
                                 <span class="harsh-tag">#lifestyle</span>
                             </p>
                         </div>
@@ -241,8 +250,8 @@
                     {% endfor %}
                 </div>
             </div>
-            <!--------------------------------- END OF MIDDLE ---------------------------------->            
-            
+            <!--------------------------------- END OF MIDDLE ---------------------------------->
+
             <!----------------------------------- RIGHT ---------------------------------------->
             <div class="right">
                 <div class="messages">
@@ -333,101 +342,104 @@
 
                 <!--------------------------- FRIEND REQUESTS ---------------------------->
                 <div class="friend-requests">
-                        <h4>Requests</h4>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="static/images/profile-5.jpg">
-                                </div>
-                                <div>
-                                    <h5>Noor Salamat</h5>
-                                    <p class="text-muted">8 mutual friends</p>
-                                    
-                                </div>                            
+                    <h4>Requests</h4>
+                    <div class="request">
+                        <div class="info">
+                            <div class="profile-photo">
+                                <img src="static/images/profile-5.jpg">
                             </div>
-                            <div class="action">
-                                <button class="btn btn-primary">Accept</button>
-                                <button class="btn">Decline</button>
+                            <div>
+                                <h5>Noor Salamat</h5>
+                                <p class="text-muted">8 mutual friends</p>
+
                             </div>
                         </div>
-                    
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="static/images/profile-3.jpg">
-                                </div>
-                                <div>
-                                    <h5>Amal MJ</h5>
-                                    <p class="text-muted">6 mutual friends</p>
-                                    
-                                </div>                            
+                        <div class="action">
+                            <button class="btn btn-primary">Accept</button>
+                            <button class="btn">Decline</button>
+                        </div>
+                    </div>
+
+                    <div class="request">
+                        <div class="info">
+                            <div class="profile-photo">
+                                <img src="static/images/profile-3.jpg">
                             </div>
-                            <div class="action">
-                                <button class="btn btn-primary">Accept</button>
-                                <button class="btn">Decline</button>
+                            <div>
+                                <h5>Amal MJ</h5>
+                                <p class="text-muted">6 mutual friends</p>
+
                             </div>
                         </div>
+                        <div class="action">
+                            <button class="btn btn-primary">Accept</button>
+                            <button class="btn">Decline</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!------------------------------ END OF RIGHT -------------------------------->
         </div>
     </main>
-<!-- ================================ THEME CUSTOMIZATION ==================================-->
-<div class="customize-theme">
-    <div class="card">
-        <h2>Customize your view</h2>
-        <p class="text-muted">Manage your size, color and background.</p>
+    <!-- ================================ THEME CUSTOMIZATION ==================================-->
+    <div class="customize-theme">
+        <div class="card">
+            <h2>Customize your view</h2>
+            <p class="text-muted">Manage your size, color and background.</p>
 
-        <!--------------- FONT SIZES ----------------->
-        <div class="font-size">
-            <h4>Font Size</h4>
-            <div>
-                <h6>Aa</h6>
-                <div class="choose-size">
-                    <span class="font-size-1"></span>
-                    <span class="font-size-2 active"></span>
-                    <span class="font-size-3"></span>
-                    <span class="font-size-4"></span>
-                    <span class="font-size-5"></span>
+            <!--------------- FONT SIZES ----------------->
+            <div class="font-size">
+                <h4>Font Size</h4>
+                <div>
+                    <h6>Aa</h6>
+                    <div class="choose-size">
+                        <span class="font-size-1"></span>
+                        <span class="font-size-2 active"></span>
+                        <span class="font-size-3"></span>
+                        <span class="font-size-4"></span>
+                        <span class="font-size-5"></span>
+                    </div>
+                    <h3>Aa</h3>
                 </div>
-                <h3>Aa</h3>
             </div>
-        </div>
-        <!--------------- Primary Colors ---------------->
-        <div class="color">
-            <h4>Color</h4>
-            <div class="choose-color">
-                <span class="color-1 active"></span>
-                <span class="color-2"></span>
-                <span class="color-3"></span>
-                <span class="color-4"></span>
-                <span class="color-5"></span>
+            <!--------------- Primary Colors ---------------->
+            <div class="color">
+                <h4>Color</h4>
+                <div class="choose-color">
+                    <span class="color-1 active"></span>
+                    <span class="color-2"></span>
+                    <span class="color-3"></span>
+                    <span class="color-4"></span>
+                    <span class="color-5"></span>
+                </div>
             </div>
-        </div>
-        <!--------------- Background -------------------->
-        <div class="background">
-            <h4>Background</h4>
-            <div class="choose-bg">
-                <div class="bg-1 active">
-                    <span></span>
-                    <h5 for="bg-1">Light</h5>
-                </div>
-                <div class="bg-2">
-                    <span></span>
-                    <h5>Dim</h5>
-                </div>
-                <div class="bg-3">
-                    <span></span>
-                    <h5 for="bg-3">Dark</h5>
+            <!--------------- Background -------------------->
+            <div class="background">
+                <h4>Background</h4>
+                <div class="choose-bg">
+                    <div class="bg-1 active">
+                        <span></span>
+                        <h5 for="bg-1">Light</h5>
+                    </div>
+                    <div class="bg-2">
+                        <span></span>
+                        <h5>Dim</h5>
+                    </div>
+                    <div class="bg-3">
+                        <span></span>
+                        <h5 for="bg-3">Dark</h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="static/Js/page.js" type="text/JavaScript" defer></script>
-<!-- <script src="static/page.js"></script> -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelectorAll('.alert').forEach(alert => setTimeout(() => alert.remove(), 500)), 1000));
-</script>
+    <!------------- Java script code ----------->
+    <script src="static/Js/page.js" type="text/JavaScript" defer></script>
+
+    <!------------- script for flash message time show ----------->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelectorAll('.alert').forEach(alert => setTimeout(() => alert.remove(), 500)), 1000));
+    </script>
 </body>
+
 </html>

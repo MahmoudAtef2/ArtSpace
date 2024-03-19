@@ -1,3 +1,4 @@
+/* ---------------- Register Page ----------------- */
 .register {
     height: 100vh;
     background-color: rgb(193, 190, 255);
@@ -17,7 +18,7 @@
 
 .register .card .left {
     flex: 1;
-    background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),center;
+    background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)), center;
     background-size: cover;
     padding: 50px;
     display: flex;
@@ -80,6 +81,7 @@
     cursor: pointer;
 }
 
+/* ---------------- Flash Message ----------------- */
 body {
     font-family: 'Segoe UI';
     margin: 0;
@@ -127,6 +129,7 @@ body {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

@@ -17,12 +17,11 @@ def home():
     posts = Post.query.all()
     return render_template("home.html", user=current_user, posts=posts)
 
-
+# Function for saveing imges
 def save_imges(photo):
     if photo and isinstance(photo, FileStorage):
         hash_photo = secrets.token_urlsafe(16)
-        file_extension = os.path.splitext(photo.filename)[
-            1]  # Extract file extension
+        file_extension = os.path.splitext(photo.filename)[1]
         photo_name = hash_photo + file_extension
         file_path = os.path.join(
             current_app.root_path, 'static/uploads', photo_name)
@@ -32,6 +31,7 @@ def save_imges(photo):
         return None
 
 
+# creat post route
 @views.route('/creat-post', methods=['POST'])
 @login_required
 def create_post():
@@ -49,7 +49,7 @@ def create_post():
         flash('Post Created!', category='success')
         return redirect(url_for('views.home'))
 
-
+# delete post route
 @views.route("/delete-post/<id>")
 @login_required
 def delete_post(id):
